@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <record model="ir.ui.view" id="account_invoice_form_view_yodeco_inh">
+      <field name="name">account.invoice.yodeco.form.view.inh</field>
+      <field name="model">account.move</field>
+      <field name="inherit_id" ref="account.view_move_form"/>
+      <field name="arch" type="xml">
+        <field name="payment_reference" position="after">
+          <field name="is_export" attrs="{'invisible': [('move_type', '!=', 'out_invoice')]}"/>
+        </field>
+
+        <xpath expr="//sheet/notebook/page[@name='other_info']" position="after">
+          <page id="yodeco_export" string="Exportación" name="data_export" attrs="{'invisible': [('is_export', '=', False)]}">
+            <group id="yodeco_exportacion_groups">
+              <group name="yodeco_exportacion_group1">
+                <field name="fob_value"/>
+                <field name="freight_value"/>
+                <field name="insurance_value"/>
+                <field name="cif_value"/>
+                <field name="freight_exp"/>
+                <field name="steam_besel"/>
+                <field name="bl_nro"/>
+              </group>
+              <group name="yodeco_exportacion_group2">
+                <field name="shipment_point"/>
+                <field name="destination_final"/>
+                <field name="shipped_via"/>
+                <field name="container"/>
+                <field name="country_origin"/>
+                <field name="discharged_port"/>
+              </group>
+            </group>
+          </page>
+
+          <page id="yodeco_custom" string="Aduana" name="data_custom" attrs="{'invisible': [('move_type', '!=', 'out_invoice')]}">
+            <group id="yodeco_custom_groups">
+              <group name="yodeco_custom_group1">
+                <field name="manifest"/>
+                <field name="bundles"/>
+                <field name="pieces_total"/>
+                <field name="custom_agent"/>
+              </group>
+              <group name="yodeco_custom_group2">
+                <field name="landing"/>
+                <field name="landing_type"/>
+                <field name="ship_owner"/>
+                <field name="seal_ship"/>
+              </group>
+            </group>
+          </page>
+
+          <page id="yodeco_exonerated" string="Exoneración" name="data_exonerated" attrs="{'invisible': [('move_type', '!=', 'out_invoice')]}">
+            <group id="yodeco_exonerated_group">
+              <field name="exempt_purchase_nro"/>
+              <field name="record_sag"/>
+              <field name="const_record_exonerated"/>
+            </group>
+          </page>
+
+        </xpath>
+      </field>
+    </record>
+  </data>
+</odoo>
